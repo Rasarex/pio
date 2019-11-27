@@ -1,28 +1,45 @@
 package  test;
 import java.util.Random;
-class Player{
-    Player(){
+import java.lang.IllegalArgumentException;
+
+class Player implements IPlayer{
+    public Player(){
         name = "Blank";
         offset = 1;
         range = 6;
         randMachine = new Random();
     }
+    public Player(String name) throws IllegalArgumentException{
+        setNameThrows(name);
+        offset  = 1;
+        range = 6;
+        randMachine = new Random();   
+    }
+    static Result<Player> getPlayer(String name){
+            Player play = new Player();    
+            if(1 == play.setName(name))
+                return new Result<>(null,false);
+            return new Result<>(play,true);
+    }   
     public int guess(){
         return randMachine.nextInt(range) + offset;
     }
-    public void setName(String name){
-        if(name == null )
-            System.out.println("Wrong name set");
-        if(name.length() == 0)
-            System.out.println("Wrong name set");
+    public int setName(String name){
+        if(null == name ||  !name.matches("^[\\w\\d~]{3,}$"))
+            return 1;
         this.name = name;
+        return 0;
+    }
+    public void setNameThrows(String name) throws IllegalArgumentException{
+          if(null == name || name.matches("^[\\w\\d~]{3,}$"))
+                throw new IllegalArgumentException();
+          this.name = name;
     }
     public  String getName() {
-
         return name;
     }
     private Random randMachine;
-    public int offset;
-    public int range;
-    public String name;
+    private int offset;
+    private int range;
+    private String name;
 }

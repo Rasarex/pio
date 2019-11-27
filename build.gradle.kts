@@ -15,6 +15,7 @@ plugins {
 }
 val run by tasks.getting(JavaExec::class) {
     standardInput = System.`in`
+    standardOutput = System.out
 }
 repositories {
     // Use jcenter for resolving dependencies.
