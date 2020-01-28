@@ -3,27 +3,35 @@
  */
 package test;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 public class App {
 
     public static void main(String[] args) {
-        Player player = null;
+        // PlayerComp player = null;
 
-        /*
-         * try{ player = new Player("Janek"); } catch(IllegalArgumentException e){
-         * System.out.println("Niepoprawne imię"); System.exit(-1); }
-         */
-        Result<Player> resPlayer = Player.getPlayer("Janek");
-        if (!resPlayer.ok()) {
-            System.out.println("Niepoprawne imię");
-            System.exit(-1);
+        // try {
+        // player = new Player("Janek");
+        // } catch (IllegalArgumentException e) {
+        // System.out.println("Niepoprawne imię");
+        // System.exit(-1);
+        // }
+
+        // Result<Player> resPlayer = Player.getPlayer("Janek");
+        // if (!resPlayer.ok()) {
+        // System.out.println("Niepoprawne imię");
+        // System.exit(-1);
+        // }
+        // player = resPlayer.unwrap();
+        Statistics stats = new Statistics();
+        Game game = new Game(stats);
+        game.addPlayer(PlayerComp.getPlayer("Janek").unwrap());
+        game.addPlayer(PlayerComp.getPlayer("Janek").unwrap());
+        game.addPlayer(PlayerComp.getPlayer("Janek").unwrap());
+        // game.printPlayers();
+
+        for (int i = 0; i < 10000; ++i) {
+            game.play();
         }
-        player = resPlayer.unwrap();
-        Game game = new Game();
-        game.addPlayer(player);
-        game.play();
+        game.showStats();
+        game.removePlayer("Janek");
     }
 }
